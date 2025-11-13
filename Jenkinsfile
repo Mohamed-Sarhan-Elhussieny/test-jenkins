@@ -1,25 +1,38 @@
 pipeline {
     agent any
+    
     environment {     
-             DOCKERHUB_CREDENTIALS= credentials('dockerhub-login') 
-            } 
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-login') 
+    } 
+    
     stages {
-        stage('login-dockerhub') {
+        stage('Login to DockerHub') {
             steps {
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo -S docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                        echo 'Login Completed'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                echo 'Login Completed'
             }
         }
-        stage('Test') {
+        
+        stage('Build and Deploy') {
             steps {
-                //
-            }
-        }
-        stage('Deploy') {
-            steps {
-                //
+                sh """
+                cd /home/mohamed-sarhan
+                ansible-playbook ansible.yml
+                """
             }
         }
     }
+    
+    post {
+        always {
+            sh 'docker logout || true'
+        }
+        success {
+            echo '✅ Pipeline completed successfully!'
+            echo '🌐 Access at http://localhost:5000'
+        }
+        failure {
+            echo '❌ Pipeline failed!'
+        }
+    }
 }
-
