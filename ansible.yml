@@ -4,23 +4,24 @@
   connection: local
   tasks:
     - name: stop current running container
-      command: docker stop web-container
+      command: docker stop web-page
       ignore_errors: yes
 
     - name: remove stopped container
-      command: docker rm web-container
+      command: docker rm web-page
       ignore_errors: yes
 
     - name: remove comingsoon-image
-      command: docker rmi mohameds2/comingsoon-page
+      command: docker rmi page
       ignore_errors: yes
 
     - name: build docker image using the Dockerfile
-      command: docker build -t page.html .
+      command: docker build -t page .
 
     - name: Push Image to dockerhub
-      command: docker push mohameds2/page.html
+      command: docker push mohameds2/page
 
     - name: run container
-      command: docker run -d --name web-container -p 5000:80 mohameds2/page.html
+      command: docker run -d --name web-page -p 5000:80 mohameds2/page
+
 
