@@ -16,7 +16,7 @@
       ignore_errors: yes
 
     - name: build docker image using the Dockerfile
-      command: docker build -t mohameds2/page.html .
+      command: docker build -t page.html 
 
     - name: Push Image to dockerhub
       command: docker push mohameds2/page.html
