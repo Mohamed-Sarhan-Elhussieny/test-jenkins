@@ -23,16 +23,5 @@ pipeline {
         }
     }
     
-    post {
-        always {
-            sh 'docker logout || true'
-        }
-        success {
-            echo '✅ Pipeline completed successfully!'
-            echo '🌐 Access at http://localhost:5000'
-        }
-        failure {
-            echo '❌ Pipeline failed!'
-        }
-    }
 }
+
