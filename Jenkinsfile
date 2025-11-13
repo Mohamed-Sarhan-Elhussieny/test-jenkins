@@ -16,7 +16,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 sh """
-                cd /home/mohamed-sarhan
+                cd /test-jenkins
                 ansible-playbook ansible.yml
                 """
             }
@@ -24,4 +24,5 @@ pipeline {
     }
     
 }
+
 
